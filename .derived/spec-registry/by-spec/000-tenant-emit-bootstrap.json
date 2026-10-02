@@ -88,12 +88,13 @@
     ],
     "risk": "low",
     "sectionDigests": {
-      "000-tenant-emit-bootstrap": "6abb5d22aa6ee186b3a9765eff287554c5cd2dbb044e9409bce1fc16bdb710b6",
+      "000-tenant-emit-bootstrap": "6c572bd397a9bfd9cd2e9ee608bed882f5f1298742bad59df57c3328cfafc551",
       "1-purpose": "169758d5020c33a9ce0a36d6aec585ecb85fc48b86d047057777036f6d9b7616",
       "2-territory": "d0fb2eb41efdb8b669d00a1544e327a53a293a5c9fd9e9460d1cfe7e8665912d",
       "3-behavior": "0d7ff986b25d0b0724d81f7172951e54d23b60d5c114cb99ebfb869557cecd35",
       "4-out-of-scope": "6f39eb8534ee1c0461bf5bdeecd395fb51cebf5f4191737d2f28531ea1ce8744",
-      "managed-governance-enrollment-2026-10-02": "771f6cf619961f4da34b03e52a777aa985f8c513d5456a18170bb1a570711eef"
+      "managed-governance-enrollment-2026-10-02": "1efbb06716428d5c9ef1f056ebb828f054fbecd9eccc4b6e75261e6e30cf4d46",
+      "managed-governance-refresh-2026-10-02": "bc732a0a1acb1db319eb22edd31bd2709c91861e9f277ad0a5b2c38095791f9f"
     },
     "sectionHeadings": [
       "000: tenant-emit bootstrap",
@@ -101,13 +102,14 @@
       "2. Territory",
       "3. Behavior",
       "4. Out of scope",
-      "Managed governance enrollment (2026-10-02)"
+      "Managed governance enrollment (2026-10-02)",
+      "Managed governance refresh (2026-10-02)"
     ],
     "specPath": "specs/000-tenant-emit-bootstrap/spec.md",
     "status": "approved",
     "summary": "Bootstrap spec for the tenant-emit repository: an emit-only toolkit that produces a factory's run-side governance certificate (the post-hoc build-certificate path), signed by an attributable tenant signer, with no pipeline orchestration. It is the emit-side counterpart of tenant-tail, which verifies the same paperwork. This spec establishes the workspace skeleton (a three-crate Cargo workspace mirroring spec-spine, plus the npm + PyPI binary-distribution wrappers) and seeds this repo's own spec corpus, governed by the pinned spec-spine library. The emit core and the verb that exposes it are claimed by subsequent specs as the extraction lands; see OAP spec 220-tenant-emit-governance-certificate for the decision to vend and the extraction map.\n",
     "title": "tenant-emit bootstrap (emit-only toolkit skeleton)"
   },
-  "shardHash": "2cb1a2f9b02eb6a91deb16351c2a7618fee7d72f8a0591756add966e2b162098",
+  "shardHash": "6115c9aeab33e93ce2dd666021ae68c99e1372424a4117c9e56d40f8eca67f7a",
   "specVersion": "1.9.0"
 }

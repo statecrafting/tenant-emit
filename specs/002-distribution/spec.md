@@ -165,3 +165,16 @@ signed commits, checks every commit, enforces source coverage and ratified
 path ownership, and requires owner review for authority changes.
 The legacy aggregate is ci-legacy; require both ci-gate and ci-legacy until
 the distribution-specific checks move into the managed profile.
+
+## Managed governance refresh (2026-10-02)
+
+The owner approved Statecraft profile revision 14 and fleet convergence after
+the revision-13 enrollment. This amendment adopts revision 14 with the
+existing exact spec-spine =0.28.0 pin and preserves the actual Rust code
+checks, all current governance parameters, and protected owner review.
+The revision-13 enrollment above remains the historical adoption record.
+The managed installer remains at .bin/spec-spine.
+Both ci-gate and ci-legacy remain required until the legacy workflow retires.
+The four-platform determinism workflow retains its Windows-compatible
+scratch installation of the exact same pinned engine. Revision 14 does not
+deliver the Windows executable-suffix repair needed to replace that path.

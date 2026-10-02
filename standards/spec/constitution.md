@@ -54,17 +54,6 @@ blessed: it is what a later spec is written against.
 
 ---
 
-## VI onward: the principles of the system you are specifying
-
-Principles I through V govern the corpus and come from spec-spine. Number your
-own from VI. They govern the system your corpus describes, and they bind every
-spec equally. Keep them few. Freeze the ones you could not recover from by
-naming their anchors in the bootstrap spec's `unamendable` list.
-
-Replace this section with your first principle.
-
----
-
 ## Amendment
 
 This constitution is changed by an ordinary spec that is `approved`, **claims
