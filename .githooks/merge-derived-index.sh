@@ -28,8 +28,8 @@
 # is a convenience over the conflict, never a replacement for the gate.
 #
 # Mirror of spec-spine's `.githooks/merge-derived-index.sh`. tenant-emit dogfoods
-# the PINNED spec-spine library (a devDependency), so the regen runs through
-# `npx --no-install spec-spine` rather than a local spec-spine build.
+# the exact-pinned repository-local spec-spine CLI, so the regen runs through
+# `.bin/spec-spine` rather than a local spec-spine build.
 
 set -eu
 
@@ -39,24 +39,18 @@ PATHNAME="${4:-<unknown>}"
 root="$(git rev-parse --show-toplevel)"
 cd "$root"
 
-# Resolve the governing binary: prefer the pinned dogfood toolchain
-# (`npx --no-install spec-spine`), then a `spec-spine` already on PATH.
+# Resolve only the repository-local exact-pinned governing binary.
 run_ss() {
-  if npx --no-install spec-spine --version >/dev/null 2>&1; then
-    npx --no-install spec-spine "$@"
-  elif command -v spec-spine >/dev/null 2>&1; then
-    spec-spine "$@"
-  else
-    return 127
-  fi
+  [ -x .bin/spec-spine ] || return 127
+  .bin/spec-spine "$@"
 }
 
 if ! run_ss --version >/dev/null 2>&1; then
   cat >&2 <<EOF
 [merge-derived-index] no spec-spine governing binary found; cannot auto-resolve $PATHNAME.
-            Install the pinned toolchain (\`npm ci\`), then re-run the rebase/merge,
+            Install the pinned toolchain (\`make tools\`), then re-run the rebase/merge,
             or resolve manually:
-                npx --no-install spec-spine compile && npx --no-install spec-spine index && git add .derived/
+                .bin/spec-spine compile && .bin/spec-spine index && git add .derived/
 EOF
   exit 1
 fi
@@ -68,7 +62,7 @@ if ! run_ss compile >/dev/null 2>&1 || ! run_ss index >/dev/null 2>&1; then
   cat >&2 <<EOF
 [merge-derived-index] \`spec-spine compile && index\` failed; leaving conflict in
             $PATHNAME for manual resolution
-            (\`npx --no-install spec-spine compile && npx --no-install spec-spine index && git add .derived/\`).
+            (\`.bin/spec-spine compile && .bin/spec-spine index && git add .derived/\`).
 EOF
   exit 1
 fi

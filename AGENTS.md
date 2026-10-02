@@ -1,3 +1,5 @@
+@.statecraft/AGENTS.md
+
 # AGENTS.md: tenant-emit
 
 ## New Sessions
@@ -10,7 +12,7 @@ Run `/init` as the mandatory first action of every new session. The command read
 > are the protocol, so `/init` does not list AGENTS.md as a parallel
 > identity read in Step 1 (avoiding the self-reference loop).
 
-tenant-emit is an emit-only CLI that dogfoods spec-spine governance. Two binaries are in play and they are different: the **product** binary is `tenant-emit` (`cargo build --release -p tenant-emit-cli`), and **governance** runs through the **pinned spec-spine devDependency**, invoked as `npx --no-install spec-spine ...` (installed by `npm ci` from the committed lockfile). Do NOT build or invoke a local spec-spine; the pinned npm one is the governing toolchain.
+tenant-emit is an emit-only CLI that dogfoods spec-spine governance. Two binaries are in play and they are different: the **product** binary is `tenant-emit` (`cargo build --release -p tenant-emit-cli`), and **governance** runs through the **exact spec-spine.toml pin**, invoked as `.bin/spec-spine ...` (installed by `make tools` through the managed installer). Use the repository-local .bin/spec-spine for governance.
 
 0. **Load rules.** Read `.claude/rules/orchestrator-rules.md`,
    `.claude/rules/governed-artifact-reads.md`, AND
@@ -20,9 +22,9 @@ tenant-emit is an emit-only CLI that dogfoods spec-spine governance. Two binarie
    dispatch the following simultaneously:
    - `CLAUDE.md`: project overview, invariants, and conventions
    - `README.md`: full project description
-   - `npx --no-install spec-spine index check`: staleness gate for the codebase index (non-fatal)
-   - `npx --no-install spec-spine registry status-report --json --nonzero-only`: lifecycle counts per status
-   - `npx --no-install spec-spine registry list --ids-only`: spec id list
+   - `.bin/spec-spine index check`: staleness gate for the codebase index (non-fatal)
+   - `.bin/spec-spine registry status-report --json --nonzero-only`: lifecycle counts per status
+   - `.bin/spec-spine registry list --ids-only`: spec id list
    - `ls crates/`: the three-crate workspace (types / core / cli)
    - `ls specs/`: the spec corpus
    - `cargo build --release -p tenant-emit-cli`: build the product binary (fast check; skip if only reading)
@@ -37,7 +39,7 @@ tenant-emit is an emit-only CLI that dogfoods spec-spine governance. Two binarie
 
 **Registry freshness:** this repo **commits** its compiled artifacts. The sharded `.derived/spec-registry/by-spec/*.json` and `.derived/codebase-index/by-spec,by-package/*.json` trees (spec-spine 0.5.0's layout) are tracked (only `.derived/**/build-meta.json` is gitignored), so the committed registry is the reference for lifecycle queries, and the coupling + staleness gates compare committed against current. `/init` still runs `compile` *first* because it is deterministic: on a fresh tree it is a no-op that leaves the tracked registry byte-identical; if it changes the registry, the committed copy was stale and the refreshed counts are the correct ones (regenerate and commit the registry before relying on it).
 
-**Toolchain missing:** if `npx --no-install spec-spine` fails because the devDependency is not installed, run `npm ci` and continue. Do NOT fall back to ad-hoc parsing of `.derived/**`.
+**Toolchain missing:** if `.bin/spec-spine` fails because the pinned engine is not installed, run `make tools` and continue. Do NOT fall back to ad-hoc parsing of `.derived/**`.
 
 If any file is missing: log "not found" and continue.
 
@@ -66,5 +68,5 @@ Commands live in `.claude/skills/` (one `SKILL.md` per folder):
 - Agents must be self-contained within `.claude/agents/`: no cross-project dependencies.
 - Orchestrated workflows must read compiled artifacts (`.derived/**`) through `spec-spine` subcommands, never via ad-hoc parsers: see `.claude/rules/governed-artifact-reads.md`.
 - Emit-only by construction: no verify verb, no verifier dependency. The corpus binding is read, never recomputed (the attestation-emit / corpus-recompute surface is banned in `clippy.toml` + `deny.toml`); `unsafe_code` is forbidden workspace-wide.
-- Governance is the pinned spec-spine npm devDependency (`npx --no-install spec-spine`), not an in-tree binary. The product binary is `tenant-emit`.
+- Governance is the pinned repository-local spec-spine binary (`.bin/spec-spine`), not an in-tree binary. The product binary is `tenant-emit`.
 - No em dash (U+2014) anywhere (house style); use a colon, comma, parentheses, or two sentences.

@@ -5,6 +5,6 @@
     "path": "crates/tenant-emit-core",
     "specRef": "000-tenant-emit-bootstrap"
   },
-  "schemaVersion": "1.1.0",
-  "shardHash": "d8e465aaff0d99086348f66870b8a5c33d3b1114d94ff10d49cbf4b20c406540"
+  "schemaVersion": "1.2.0",
+  "shardHash": "bc6016a413d879510bbc9de672fc3abdb74b06545edc18ccba2de6b863418a24"
 }

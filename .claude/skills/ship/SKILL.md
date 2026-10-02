@@ -14,8 +14,8 @@ spec to make the gate pass).
 
 tenant-emit is an emit-only Rust workspace plus an npm and a PyPI shim.
 There are two gate layers: the **build** gate (`cargo`) and the
-**governance** gate, the pinned spec-spine devDependency run as
-`npx --no-install spec-spine ...` (the dogfood loop; CI runs the same).
+**governance** gate, the pinned repository-local spec-spine binary run as
+`.bin/spec-spine ...` (the dogfood loop; CI runs the same).
 
 ## Step 0: preflight
 
@@ -38,10 +38,10 @@ cargo test --workspace --locked
 cargo clippy --workspace --all-targets --locked -- -D warnings
 
 # Governance gate (CI's `self-governance` job), via the pinned spec-spine
-npx --no-install spec-spine compile                 # specs -> .derived/spec-registry/registry.json
-npx --no-install spec-spine lint --fail-on-warn     # corpus well-formedness (exit 1 on a warn)
-npx --no-install spec-spine index check             # staleness gate (committed .derived must be current)
-npx --no-install spec-spine couple --base origin/main --head HEAD   # the drift gate (exit 1 on drift)
+.bin/spec-spine compile                 # specs -> .derived/spec-registry/registry.json
+.bin/spec-spine lint --fail-on-warn     # corpus well-formedness (exit 1 on a warn)
+.bin/spec-spine index check             # staleness gate (committed .derived must be current)
+.bin/spec-spine couple --base origin/main --head HEAD   # the drift gate (exit 1 on drift)
 ```
 
 Outcomes:
@@ -49,7 +49,7 @@ Outcomes:
 - All pass: continue to Step 2.
 - `index check` reports stale: the committed `.derived/` is behind current
   inputs (a changed spec, a touched workflow, new code). Regenerate with
-  `npx --no-install spec-spine compile && npx --no-install spec-spine index`,
+  `.bin/spec-spine compile && .bin/spec-spine index`,
   then stage and commit the regenerated
   `.derived/spec-registry/registry.json` and
   `.derived/codebase-index/index.json` with your change. `.derived/` is a

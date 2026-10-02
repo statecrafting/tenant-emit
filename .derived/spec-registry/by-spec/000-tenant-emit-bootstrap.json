@@ -6,6 +6,50 @@
     "created": "2026-06-22",
     "establishes": [
       {
+        "kind": "directory",
+        "path": "website/"
+      },
+      {
+        "kind": "directory",
+        "path": ".githooks/"
+      },
+      {
+        "kind": "directory",
+        "path": "standards/spec/"
+      },
+      {
+        "kind": "file",
+        "path": "spec-spine.toml"
+      },
+      {
+        "kind": "file",
+        "path": "AGENTS.md"
+      },
+      {
+        "kind": "file",
+        "path": "Makefile"
+      },
+      {
+        "kind": "file",
+        "path": ".github/CODEOWNERS"
+      },
+      {
+        "kind": "file",
+        "path": ".github/workflows/statecraft-ai-review.yml"
+      },
+      {
+        "kind": "file",
+        "path": ".github/workflows/statecraft-ci.yml"
+      },
+      {
+        "kind": "directory",
+        "path": ".statecraft/"
+      },
+      {
+        "kind": "directory",
+        "path": "scripts/statecraft/"
+      },
+      {
         "kind": "file",
         "path": "Cargo.toml"
       },
@@ -43,18 +87,27 @@
       }
     ],
     "risk": "low",
+    "sectionDigests": {
+      "000-tenant-emit-bootstrap": "6abb5d22aa6ee186b3a9765eff287554c5cd2dbb044e9409bce1fc16bdb710b6",
+      "1-purpose": "169758d5020c33a9ce0a36d6aec585ecb85fc48b86d047057777036f6d9b7616",
+      "2-territory": "d0fb2eb41efdb8b669d00a1544e327a53a293a5c9fd9e9460d1cfe7e8665912d",
+      "3-behavior": "0d7ff986b25d0b0724d81f7172951e54d23b60d5c114cb99ebfb869557cecd35",
+      "4-out-of-scope": "6f39eb8534ee1c0461bf5bdeecd395fb51cebf5f4191737d2f28531ea1ce8744",
+      "managed-governance-enrollment-2026-10-02": "771f6cf619961f4da34b03e52a777aa985f8c513d5456a18170bb1a570711eef"
+    },
     "sectionHeadings": [
       "000: tenant-emit bootstrap",
       "1. Purpose",
       "2. Territory",
       "3. Behavior",
-      "4. Out of scope"
+      "4. Out of scope",
+      "Managed governance enrollment (2026-10-02)"
     ],
     "specPath": "specs/000-tenant-emit-bootstrap/spec.md",
     "status": "approved",
     "summary": "Bootstrap spec for the tenant-emit repository: an emit-only toolkit that produces a factory's run-side governance certificate (the post-hoc build-certificate path), signed by an attributable tenant signer, with no pipeline orchestration. It is the emit-side counterpart of tenant-tail, which verifies the same paperwork. This spec establishes the workspace skeleton (a three-crate Cargo workspace mirroring spec-spine, plus the npm + PyPI binary-distribution wrappers) and seeds this repo's own spec corpus, governed by the pinned spec-spine library. The emit core and the verb that exposes it are claimed by subsequent specs as the extraction lands; see OAP spec 220-tenant-emit-governance-certificate for the decision to vend and the extraction map.\n",
     "title": "tenant-emit bootstrap (emit-only toolkit skeleton)"
   },
-  "shardHash": "b1f5a9151d81b47c25496ce6235cc9c1b881ac7e228aab63d32a790db2e6e79b",
-  "specVersion": "1.1.0"
+  "shardHash": "2cb1a2f9b02eb6a91deb16351c2a7618fee7d72f8a0591756add966e2b162098",
+  "specVersion": "1.9.0"
 }

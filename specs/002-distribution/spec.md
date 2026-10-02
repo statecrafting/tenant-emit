@@ -155,3 +155,13 @@ the release pipeline.
   and the kernel pin: OAP-side Leg C. Once tenant-emit cuts a release, OAP pins it.
 - The npm/PyPI publish credentials and the actual publish event: an operator /
   release-trigger concern, not source.
+
+## Managed governance enrollment (2026-10-02)
+
+The owner requested enrollment on spec-spine =0.28.0 and the Statecraft
+github-actions-rust profile revision 13. The adopted pin remains the single
+version authority. The managed profile installs .bin/spec-spine, preserves
+signed commits, checks every commit, enforces source coverage and ratified
+path ownership, and requires owner review for authority changes.
+The legacy aggregate is ci-legacy; require both ci-gate and ci-legacy until
+the distribution-specific checks move into the managed profile.
