@@ -4,9 +4,9 @@ name: CI
 # governance gates against THIS repo's own corpus (the dogfood pattern). An
 # emit-only toolkit that is not itself spec-governed would be hypocritical.
 #
-# The single required status check is `ci-gate` (see the job at the bottom): it
-# aggregates every job, so branch protection and the merge queue require just
-# that one name instead of an enumerated, drift-prone list.
+# The legacy aggregate is `ci-legacy` (see the job at the bottom). Branch
+# protection and the merge queue require both it and the managed `ci-gate`
+# until these distribution checks move into the managed workflow.
 
 on:
   push:
@@ -56,16 +56,15 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
-      # Root package.json pins spec-spine as a devDependency; npm ci installs it
-      # from the committed package-lock.json (sha512-locked, offline-capable).
+      # Install the exact spec-spine.toml pin with the managed installer.
       - name: Install pinned governance toolchain
-        run: npm ci
+        run: sh scripts/statecraft/install-spec-spine.sh
       - name: Compile registry (validation gate)
-        run: npx --no-install spec-spine compile
+        run: .bin/spec-spine compile
       - name: Codebase index freshness (committed artifacts must be current)
-        run: npx --no-install spec-spine index check
+        run: .bin/spec-spine index check
       - name: Conformance lint (fail on warn)
-        run: npx --no-install spec-spine lint --fail-on-warn
+        run: .bin/spec-spine lint --fail-on-warn
       # The coupling gate is a PR-time gate: it joins the spec and code views and
       # refuses the *merge* when code drifts from its owning spec. It runs on
       # pull_request only. A push to main has already merged (nothing left to
@@ -80,10 +79,10 @@ jobs:
           BASE="${{ github.event.pull_request.base.sha }}"
           echo "coupling base: $BASE -> HEAD"
           printf '%s' "${PR_BODY:-}" > /tmp/pr-body.txt
-          npx --no-install spec-spine couple --base "$BASE" --head HEAD --pr-body /tmp/pr-body.txt
+          .bin/spec-spine couple --base "$BASE" --head HEAD --pr-body /tmp/pr-body.txt
 
   # Cross-platform determinism golden for the committed governance artifacts, run
-  # as a reusable workflow so the single `ci-gate` check below covers it too.
+  # as a reusable workflow so the `ci-legacy` aggregate below covers it too.
   determinism:
     name: determinism
     uses: ./.github/workflows/determinism.yml
@@ -115,7 +114,7 @@ jobs:
             echo "bin=$RUNNER_TEMP/tt/bin/tenant-tail" >> "$GITHUB_OUTPUT"
           else
             echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=round-trip skipped::tenant-tail ${TENANT_TAIL_VERSION} is not installable from crates.io yet; the cross-tool round-trip did NOT run. ci-gate passes so the unpublished verifier does not block merges, and this becomes enforcing once tenant-tail publishes. A green ci-gate here does NOT imply the round-trip ran."
+            echo "::warning title=round-trip skipped::tenant-tail ${TENANT_TAIL_VERSION} is not installable from crates.io yet; the cross-tool round-trip did NOT run. ci-legacy passes so the unpublished verifier does not block merges, and this becomes enforcing once tenant-tail publishes. A green ci-legacy here does NOT imply the round-trip ran."
             tail -n 5 /tmp/tt-install.log || true
           fi
       - name: Emit → verify clean → tamper → verify fails
@@ -150,7 +149,7 @@ jobs:
 
   # AI PR review folded into the gate (OAP spec 177 + 085 precedent). PR-only:
   # it needs PR context (number, base/head diff), so it is skipped on
-  # push/merge_group/workflow_dispatch, which ci-gate treats as success.
+  # push/merge_group/workflow_dispatch, which ci-legacy treats as success.
   # Job-level pull-requests: write overrides the workflow read default (the
   # review posts a comment); only the one secret the reusable workflow actually
   # consumes (CLAUDE_CODE_OAUTH_TOKEN) is forwarded, not the full repo secret
@@ -166,12 +165,11 @@ jobs:
       CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
     uses: ./.github/workflows/ai-pr-review.yml
 
-  # The single required status check for branch protection and the merge queue.
-  # It aggregates every CI job, so branch protection requires just this one name
-  # instead of an enumerated, drift-prone list. A skipped job (e.g. a future
+  # The required legacy aggregate complements the managed ci-gate during
+  # migration. It aggregates this workflow's distribution checks. A skipped job (e.g. a future
   # event-gated one) counts as a pass; a failed or cancelled job fails the gate.
-  ci-gate:
-    name: ci-gate
+  ci-legacy:
+    name: ci-legacy
     if: ${{ always() }}
     needs: [test, self_governance, determinism, roundtrip, ai-review]
     runs-on: ubuntu-latest
@@ -184,4 +182,4 @@ jobs:
           exit 1
       - name: All required CI jobs passed
         run: |
-          echo "ci-gate passed: test, self_governance, determinism, roundtrip, and ai-review are all green or skipped"
+          echo "ci-legacy passed: test, self_governance, determinism, roundtrip, and ai-review are all green or skipped"

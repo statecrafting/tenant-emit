@@ -63,7 +63,7 @@ For the emit crates:
 
 For specs:
 - Read frontmatter for relationship edges (`refines`, `establishes`, `amends`, `supersedes`, `depends-on`) and `status`
-- Cross-reference compiled governance state through `npx --no-install spec-spine registry show`/`relationships` (not by parsing `.derived/**`)
+- Cross-reference compiled governance state through `.bin/spec-spine registry show`/`relationships` (not by parsing `.derived/**`)
 
 ### 4. Synthesize Findings
 
@@ -102,7 +102,7 @@ Produce a clear, structured answer. Include:
 - **DO:** Check both `Cargo.toml` and actual `use` statements; declared deps may differ from usage
 - **DO:** Include file paths in every finding so the caller can navigate directly
 - **DO:** Note when something is missing or inconsistent (e.g. a spec exists but has no implementation)
-- **DO:** Read compiled artifacts only through `npx --no-install spec-spine` subcommands, never via ad-hoc `jq`/grep
+- **DO:** Read compiled artifacts only through `.bin/spec-spine` subcommands, never via ad-hoc `jq`/grep
 - **DO NOT:** Modify any files; this agent is strictly read-only
 - **DO NOT:** Speculate when you can search; verify claims against actual code
 - **DO NOT:** Stop at the first result; check for all occurrences

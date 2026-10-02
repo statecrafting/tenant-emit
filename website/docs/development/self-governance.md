@@ -19,17 +19,17 @@ The `spec-spine` compiler is pinned as a devDependency in the repository.
 During CI, and before committing changes to the specifications, the corpus must be compiled and linted.
 
 ```bash
-# Ensure Node.js dependencies are installed
-npm ci
+# Install the exact governance CLI pin
+make tools
 
 # Compile the specs
-npx --no-install spec-spine compile
+.bin/spec-spine compile
 
 # Check the index
-npx --no-install spec-spine index check
+.bin/spec-spine index check
 
 # Lint the corpus
-npx --no-install spec-spine lint --fail-on-warn
+.bin/spec-spine lint --fail-on-warn
 ```
 
 This process generates the derived artifacts in the `.derived/` directory. These artifacts are committed to the repository to provide a deterministic, cross-platform proof of the specification state.

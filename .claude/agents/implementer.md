@@ -31,7 +31,7 @@ tenant-emit is an emit-only CLI (it produces a factory's run-side governance cer
 
 | Surface | Path | Build / verify |
 |---------|------|----------------|
-| Spec corpus | `specs/NNN-slug/spec.md` | `npx --no-install spec-spine compile`, then `... lint` |
+| Spec corpus | `specs/NNN-slug/spec.md` | `.bin/spec-spine compile`, then `... lint` |
 | Shared DTOs | `crates/tenant-emit-types/` | `cargo check` / `cargo build` |
 | Emit engine | `crates/tenant-emit-core/` | `cargo check`, `cargo test -p tenant-emit-core` |
 | CLI crate | `crates/tenant-emit-cli/` | `cargo build --release -p tenant-emit-cli` |
@@ -67,9 +67,9 @@ For each step:
 
 After each change:
 - **Rust**: `cargo check` (fast) or `cargo build` (full); run `cargo test --workspace` (or `cargo test -p tenant-emit-core <name>`) when behavior changed
-- **Specs**: run `npx --no-install spec-spine compile` if spec frontmatter was modified, then `... lint`
+- **Specs**: run `.bin/spec-spine compile` if spec frontmatter was modified, then `... lint`
 - **Lint**: run `cargo clippy --workspace --all-targets -- -D warnings`
-- **Coupling**: when both code and its owning spec changed, run `npx --no-install spec-spine couple` to confirm they stay coupled
+- **Coupling**: when both code and its owning spec changed, run `.bin/spec-spine couple` to confirm they stay coupled
 
 If verification fails, fix the issue before moving to the next step. Do not continue past a failure.
 

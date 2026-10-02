@@ -2,17 +2,15 @@
   "name": "tenant-emit-repo",
   "version": "0.3.0",
   "private": true,
-  "description": "Repo-root dev manifest: pins the spec-spine governance toolchain so this repo's specs/ corpus is self-governed (the dogfood pattern). Not published; the vended package is npm/ (the tenant-emit CLI shim).",
+  "description": "Repo-root development commands. Governance uses the exact pin in spec-spine.toml; the vended binary shim lives in npm/.",
   "license": "Apache-2.0",
   "scripts": {
-    "spec:compile": "spec-spine compile",
-    "spec:lint": "spec-spine lint --fail-on-warn",
-    "spec:index": "spec-spine index check",
-    "spec:check": "spec-spine compile && spec-spine index check && spec-spine lint --fail-on-warn"
+    "spec:compile": ".bin/spec-spine compile",
+    "spec:lint": ".bin/spec-spine lint --fail-on-warn",
+    "spec:index": ".bin/spec-spine index check",
+    "spec:check": ".bin/spec-spine compile && .bin/spec-spine index check && .bin/spec-spine lint --fail-on-warn"
   },
-  "devDependencies": {
-    "spec-spine": "0.10.0"
-  },
+  "devDependencies": {},
   "tenant-emit": {
     "spec": "000-tenant-emit-bootstrap"
   }

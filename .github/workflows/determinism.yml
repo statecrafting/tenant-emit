@@ -25,7 +25,7 @@ name: determinism
 # build-meta.json is excluded: it carries a wall-clock `builtAt`, the sole
 # non-deterministic artifact (it is gitignored for the same reason).
 
-# Driven by ci.yml as a reusable workflow so the single `ci-gate` check covers
+# Driven by ci.yml as a reusable workflow so the `ci-legacy` aggregate covers
 # determinism too (and it runs on the merge queue through ci.yml's merge_group
 # trigger). `workflow_dispatch` keeps it runnable on its own.
 on:
@@ -52,15 +52,21 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: 20
-      # Install the pinned spec-spine governing binary (sha512-locked, offline).
+      # Install the exact TOML pin; cargo handles the Windows executable suffix.
       - name: Install pinned governance toolchain
-        run: npm ci
+        shell: bash
+        run: |
+          set -euo pipefail
+          v=$(sed -n 's/^required_version = "=\(.*\)"/\1/p' spec-spine.toml)
+          test -n "$v"
+          cargo install spec-spine-cli --version "=$v" --locked --root "$RUNNER_TEMP/spine"
+          echo "$RUNNER_TEMP/spine/bin" >> "$GITHUB_PATH"
       - name: Compile + index this repo's own corpus
         shell: bash
         run: |
           set -euo pipefail
-          npx --no-install spec-spine compile
-          npx --no-install spec-spine index
+          spec-spine compile
+          spec-spine index
       - name: Digest the deterministic artifacts
         shell: bash
         run: |

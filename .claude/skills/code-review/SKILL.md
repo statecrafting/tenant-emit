@@ -15,7 +15,7 @@ user asks for a fix afterward.
 
 This repo is an emit-only Rust workspace plus an npm and a PyPI
 distribution shim. The build gate is `cargo`; the governance gate is the
-**pinned spec-spine devDependency**, run as `npx --no-install spec-spine ...`.
+**pinned repository-local spec-spine binary**, run as `.bin/spec-spine ...`.
 
 ## Step 0: scope the diff
 
@@ -40,10 +40,10 @@ cargo fmt --all --check
 cargo build --workspace --locked
 cargo test --workspace --locked
 cargo clippy --workspace --all-targets --locked -- -D warnings
-npx --no-install spec-spine compile
-npx --no-install spec-spine lint --fail-on-warn      # corpus well-formedness
-npx --no-install spec-spine index check              # staleness (committed .derived must be current)
-npx --no-install spec-spine couple --base origin/main --head HEAD   # drift gate
+.bin/spec-spine compile
+.bin/spec-spine lint --fail-on-warn      # corpus well-formedness
+.bin/spec-spine index check              # staleness (committed .derived must be current)
+.bin/spec-spine couple --base origin/main --head HEAD   # drift gate
 ```
 
 - A `couple` failure is the headline finding: cite the file the gate
@@ -58,8 +58,8 @@ contract of its owning spec rather than only with the gate's mechanical
 pass. Useful reads (governed, via the binary, not ad-hoc JSON parsing):
 
 ```sh
-npx --no-install spec-spine registry show <spec-id>           # the owning spec's declared surface
-npx --no-install spec-spine registry relationships <spec-id>  # its typed edges
+.bin/spec-spine registry show <spec-id>           # the owning spec's declared surface
+.bin/spec-spine registry relationships <spec-id>  # its typed edges
 ```
 
 Flag drift where code does something the spec's narrative or owned

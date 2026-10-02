@@ -37,7 +37,7 @@ tenant-emit is an emit-only CLI: it produces a factory's run-side governance cer
 | Distribution | `npm/` | Prebuilt-binary wrapper mirroring spec-spine's shape; never the source of truth for logic |
 | Derived | `.derived/` | spec-spine's compiled artifacts (committed), read only through the pinned spec-spine binary |
 
-Specs are the source of truth: every feature starts as a spec under `specs/`, following `standards/spec/templates/spec-template.md`. The repo dogfoods spec-spine governance through the pinned devDependency (`npx --no-install spec-spine ...`). The behavioral rules are in `.claude/rules/` (orchestrator, governed artifact reads, adversarial prompt refusal).
+Specs are the source of truth: every feature starts as a spec under `specs/`, following `standards/spec/templates/spec-template.md`. The repo dogfoods spec-spine governance through the pinned repository-local binary (`.bin/spec-spine ...`). The behavioral rules are in `.claude/rules/` (orchestrator, governed artifact reads, adversarial prompt refusal).
 
 **Emit-only boundary (a hard invariant):** never plan a verifier path (signature re-check, artifact re-derivation, corpus-binding adjudication), a verifier dependency, or any network surface. The certificate this emits is signed with the operator key and re-checked downstream by tenant-tail; tenant-emit never verifies one of its own. The corpus binding (spec 220 FR-007) is read, never recomputed: the emit-side attestation-emit / corpus-recompute surface is banned workspace-wide (clippy.toml + deny.toml). `unsafe_code = "forbid"` is workspace-wide. The boundary is structural, not documentary.
 
@@ -53,7 +53,7 @@ Read the request or task document. Identify which surfaces and crates are affect
 - Relevant specs in `specs/NNN-slug/spec.md`: the authoritative design record
 - `standards/spec/templates/spec-template.md`: the authoring template for any new spec
 - Existing code in affected crates: understand current patterns
-- Compiled governance state, read through `npx --no-install spec-spine registry list`/`show`/`relationships` (never by parsing `.derived/**` directly)
+- Compiled governance state, read through `.bin/spec-spine registry list`/`show`/`relationships` (never by parsing `.derived/**` directly)
 
 ### 3. Validate Against the Spec Corpus
 
@@ -72,7 +72,7 @@ Break the work into ordered, atomic steps. For each step specify:
 - **What** changes (files, crates)
 - **Why** (which spec requirement or invariant)
 - **Dependencies** on prior steps
-- **Verification** (the command that confirms the step: `cargo check`, `cargo test`, `npx --no-install spec-spine compile`, `npx --no-install spec-spine lint`, `npx --no-install spec-spine couple`)
+- **Verification** (the command that confirms the step: `cargo check`, `cargo test`, `.bin/spec-spine compile`, `.bin/spec-spine lint`, `.bin/spec-spine couple`)
 
 ### 5. Identify Risks
 

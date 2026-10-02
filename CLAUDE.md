@@ -12,8 +12,8 @@ Both are extracted from OAP's `factory-engine` and relicensed Apache-2.0 (see
 NOTICE); both are pinned by the born-with kernel next to `spec-spine`.
 
 The product binary is `tenant-emit`; its single verb is `build-certificate`.
-Governance runs through the pinned `spec-spine` npm devDependency
-(`npx --no-install spec-spine ...`), never an in-tree spec-spine build.
+Governance runs through the exact-pinned repository-local `spec-spine` CLI
+(`.bin/spec-spine ...`), installed by `make tools`.
 
 ## Load-bearing invariants
 
@@ -80,8 +80,8 @@ exposes the verb and the corpus read-path.
 - Build the product binary: `cargo build --release -p tenant-emit-cli`.
 - Gate before commit: `cargo test --workspace`, `cargo clippy --workspace
   --all-targets -- -D warnings`, `cargo fmt --all --check`, and the spec-spine
-  dogfood (`npx --no-install spec-spine compile && spec-spine index check &&
-  spec-spine lint --fail-on-warn`).
+  dogfood (`.bin/spec-spine compile && .bin/spec-spine index check &&
+  .bin/spec-spine lint --fail-on-warn`).
 - Read compiled artifacts (`.derived/**`) through `spec-spine` subcommands, never
   via ad-hoc `jq`/`python`/`sed` (see `.claude/rules/governed-artifact-reads.md`).
 - OAP stays the source of truth for the emit core; this repo carries an extracted

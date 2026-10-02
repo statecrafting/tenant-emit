@@ -38,10 +38,6 @@
         "source": "manifest-metadata"
       },
       {
-        "path": "npm/README.md",
-        "source": "spec-edge"
-      },
-      {
         "path": "npm/bin/tenant-emit.js",
         "source": "spec-edge"
       },
@@ -63,10 +59,6 @@
       },
       {
         "path": "npm/test/platform.test.js",
-        "source": "spec-edge"
-      },
-      {
-        "path": "py/README.md",
         "source": "spec-edge"
       },
       {
@@ -291,6 +283,6 @@
     "specId": "002-distribution",
     "specStatus": "approved"
   },
-  "schemaVersion": "1.1.0",
-  "shardHash": "02b20a9349cdaccb67054c4e7ea9cc8eae675ad67deddb6a09c886b5c9b921af"
+  "schemaVersion": "1.2.0",
+  "shardHash": "00d551110bbbc467a42a494ee3966500669feff50b24cb99f5af2eeb0331e1f0"
 }

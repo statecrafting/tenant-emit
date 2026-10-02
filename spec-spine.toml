@@ -1,8 +1,11 @@
+[meta]
+required_version = "=0.28.0"
+
 # spec-spine governing the tenant-emit repository (dogfood).
 #
 # tenant-emit vends an emit-only toolkit; its own specs/ corpus is governed by
-# the published spec-spine library, pinned as a dev dependency and invoked as
-# `npx --no-install spec-spine {compile,lint,index check,couple}`. This is the
+# the published spec-spine CLI, pinned by [meta] required_version and invoked as
+# `.bin/spec-spine {compile,lint,index check,couple}`. This is the
 # same dogfooding pattern spec-spine, OAP, and tenant-tail all follow. spec-spine
 # reads its config from `spec-spine.toml` at the repo root; only the metadata
 # namespace and layout differ from the built-in defaults.
@@ -31,7 +34,7 @@ standalone_rust_workspaces = []
 standalone_npm_packages    = ["npm"]
 
 [index]
-extra_hashed_inputs = ["standards/**", ".github/workflows/**"]
+extra_hashed_inputs = ["AGENTS.md", "Makefile", "scripts/statecraft/**/*", ".statecraft/AGENTS.md", ".statecraft/environment.json", ".statecraft/setup/github-actions-rust.json", ".github/CODEOWNERS", "standards/**/*", ".github/workflows/**/*"]
 resolver_exclusions = ["target", "node_modules", ".derived", "dist", "build", ".next"]
 
 [branding]
@@ -49,3 +52,26 @@ code-fingerprint = "fingerprint://"
 
 [frontmatter]
 extra_known_keys = []
+
+[lint]
+# Legacy whole-file source claims preserve their established ownership model.
+# They are deliberately unwitnessed rather than making every code edit a global hash.
+unwitnessed_allowed = [
+  "Cargo.toml",
+  "clippy.toml",
+  "crates/tenant-emit-cli/src/main.rs",
+  "crates/tenant-emit-core/src/certificate.rs",
+  "crates/tenant-emit-core/src/lib.rs",
+  "crates/tenant-emit-types/src/build_spec.rs",
+  "crates/tenant-emit-types/src/certificate.rs",
+  "crates/tenant-emit-types/src/inter_stage_manifest.rs",
+  "crates/tenant-emit-types/src/lib.rs",
+  "crates/tenant-emit-types/src/pipeline_state.rs",
+  "deny.toml",
+  "npm/bin/tenant-emit.js",
+  "npm/lib/platform.js",
+  "npm/scripts/generate-platform-packages.js",
+  "npm/scripts/smoke-test.sh",
+  "npm/test/platform.test.js",
+  "py/scripts/generate_wheels.py",
+]

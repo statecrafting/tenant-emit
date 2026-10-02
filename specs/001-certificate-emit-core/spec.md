@@ -128,3 +128,13 @@ needs only a laid-out run directory and a signing key, not a live pipeline.
   (`--sbom-dir`) wiring): owned by `002-distribution`.
 - The certificate format and verdict logic (specs 102/168/170/198/218): tenant-
   emit changes who emits and where the key lives, not what a valid certificate is.
+
+## Managed governance enrollment (2026-10-02)
+
+The owner requested enrollment on spec-spine =0.28.0 and the Statecraft
+github-actions-rust profile revision 13. The adopted pin remains the single
+version authority. The managed profile installs .bin/spec-spine, preserves
+signed commits, checks every commit, enforces source coverage and ratified
+path ownership, and requires owner review for authority changes.
+The legacy aggregate is ci-legacy; require both ci-gate and ci-legacy until
+the distribution-specific checks move into the managed profile.

@@ -6,11 +6,35 @@
         "source": "manifest-metadata"
       },
       {
+        "path": ".githooks/",
+        "source": "spec-edge"
+      },
+      {
+        "path": ".github/CODEOWNERS",
+        "source": "spec-edge"
+      },
+      {
+        "path": ".github/workflows/statecraft-ai-review.yml",
+        "source": "spec-edge"
+      },
+      {
+        "path": ".github/workflows/statecraft-ci.yml",
+        "source": "spec-edge"
+      },
+      {
+        "path": ".statecraft/",
+        "source": "spec-edge"
+      },
+      {
+        "path": "AGENTS.md",
+        "source": "spec-edge"
+      },
+      {
         "path": "Cargo.toml",
         "source": "spec-edge"
       },
       {
-        "path": "README.md",
+        "path": "Makefile",
         "source": "spec-edge"
       },
       {
@@ -32,9 +56,51 @@
       {
         "path": "py",
         "source": "spec-edge"
+      },
+      {
+        "path": "scripts/statecraft/",
+        "source": "spec-edge"
+      },
+      {
+        "path": "spec-spine.toml",
+        "source": "spec-edge"
+      },
+      {
+        "path": "standards/spec/",
+        "source": "spec-edge"
+      },
+      {
+        "path": "website/",
+        "source": "spec-edge"
       }
     ],
     "resolvedUnits": [
+      {
+        "locations": [
+          {
+            "file": ".githooks/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "directory",
+          "path": ".githooks/"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": ".statecraft/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "directory",
+          "path": ".statecraft/"
+        }
+      },
       {
         "locations": [
           {
@@ -103,6 +169,97 @@
       {
         "locations": [
           {
+            "file": "scripts/statecraft/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "directory",
+          "path": "scripts/statecraft/"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "standards/spec/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "directory",
+          "path": "standards/spec/"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "website/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "directory",
+          "path": "website/"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": ".github/CODEOWNERS"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": ".github/CODEOWNERS"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": ".github/workflows/statecraft-ai-review.yml"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": ".github/workflows/statecraft-ai-review.yml"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": ".github/workflows/statecraft-ci.yml"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": ".github/workflows/statecraft-ci.yml"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "AGENTS.md"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": "AGENTS.md"
+        }
+      },
+      {
+        "locations": [
+          {
             "file": "Cargo.toml"
           }
         ],
@@ -111,6 +268,32 @@
         "unit": {
           "kind": "file",
           "path": "Cargo.toml"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "Makefile"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": "Makefile"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "spec-spine.toml"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": "spec-spine.toml"
         }
       },
       {
@@ -130,6 +313,6 @@
     "specId": "000-tenant-emit-bootstrap",
     "specStatus": "approved"
   },
-  "schemaVersion": "1.1.0",
-  "shardHash": "e68182abd4da81eed898a81c89f59b1717792776ae405c9b3b3fea927736a893"
+  "schemaVersion": "1.2.0",
+  "shardHash": "2cb1a2f9b02eb6a91deb16351c2a7618fee7d72f8a0591756add966e2b162098"
 }

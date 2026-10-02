@@ -21,6 +21,17 @@ summary: >
   extraction map.
 depends_on: []
 establishes:
+  - { kind: directory, path: "website/" }
+  - { kind: directory, path: ".githooks/" }
+  - { kind: directory, path: "standards/spec/" }
+  - { kind: file, path: "spec-spine.toml" }
+  - { kind: file, path: "AGENTS.md" }
+  - { kind: file, path: "Makefile" }
+  - { kind: file, path: ".github/CODEOWNERS" }
+  - { kind: file, path: ".github/workflows/statecraft-ai-review.yml" }
+  - { kind: file, path: ".github/workflows/statecraft-ci.yml" }
+  - { kind: directory, path: ".statecraft/" }
+  - { kind: directory, path: "scripts/statecraft/" }
   - { kind: file, path: "Cargo.toml" }
   - { kind: directory, path: "crates/tenant-emit-types" }
   - { kind: directory, path: "crates/tenant-emit-core" }
@@ -99,3 +110,16 @@ bootstrap territory.
 - The firing step (seeded CI invoking the emitter at run completion, spec 220
   FR-002) and the kernel pin: OAP-side Leg C, not this repo. tenant-emit need
   only be the installable, round-tripping emitter.
+
+## Managed governance enrollment (2026-10-02)
+
+The owner requested enrollment on spec-spine =0.28.0 and the Statecraft
+github-actions-rust profile revision 13. The adopted pin remains the single
+version authority. The managed profile installs .bin/spec-spine, preserves
+signed commits, checks every commit, enforces source coverage and ratified
+path ownership, and requires owner review for authority changes.
+The legacy aggregate is ci-legacy; require both ci-gate and ci-legacy until
+the distribution-specific checks move into the managed profile.
+
+The constitution template uses section authority claims for amendments, matching
+the managed constitution. The `amends` relationship continues to target spec ids.

@@ -24,5 +24,5 @@ Copilot, and any future agent.
 
 The protocol builds the emit CLI from source (`cargo build --release
 -p tenant-emit-cli`) and reads governance state through the pinned
-spec-spine (`npx --no-install spec-spine ...`, the dogfood dependency).
+spec-spine (`.bin/spec-spine ...`, the dogfood dependency).
 If the binary is missing, build it and continue.

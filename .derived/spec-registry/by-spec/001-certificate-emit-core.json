@@ -50,18 +50,27 @@
       }
     ],
     "risk": "medium",
+    "sectionDigests": {
+      "001-certificate-emit-core": "7c0bc6fe1efc5da7f45a2426e4df743f079a4673b6ad3d5e4be776dfaf0f4d2d",
+      "1-purpose": "bcf02910f5e53904fab3154f19ea9687eaf752be11f46e19dd6bf61f3625e59c",
+      "2-territory": "7aa5bca9b825eec55a2d8ac76e602e39c07149edb8de6a86a0a1745e431e7a11",
+      "3-behavior": "916d6a34653b8af7c765bc268cf3d177332c4cb386f8fc32b68fe43de2a8a678",
+      "4-out-of-scope": "3d1c661dd90d462803e1387daea38b64f2e214048ef9561d9f2f4aa2622e651f",
+      "managed-governance-enrollment-2026-10-02": "58730237d82d4bcc7c0bb08a79127eb31d1641b7bbd9fff2c1eba33d7211f558"
+    },
     "sectionHeadings": [
       "001: Certificate emit core",
       "1. Purpose",
       "2. Territory",
       "3. Behavior",
-      "4. Out of scope"
+      "4. Out of scope",
+      "Managed governance enrollment (2026-10-02)"
     ],
     "specPath": "specs/001-certificate-emit-core/spec.md",
     "status": "approved",
     "summary": "The certificate emit engine, extracted from OAP's build_certificate.rs + governance_certificate.rs (the emit path) and kept in behavior parity. It reconstructs a signed governance-certificate.json from a finished `.factory/runs/<run-id>/<stage-id>/<artifacts>` directory: it scans each stage directory, computes SHA-256 over every file, lifts the frozen Build Spec hash, attaches an attributable signer, resolves an Ed25519 signing key (operator env-var or ephemeral fallback), computes the content-binding hash and the Ed25519 signature, and persists the certificate. It optionally binds the tenant's own corpus attestation by hash, its SBOM artifacts by content hash, and the produced app's declared agentic posture read off the frozen Build Spec (all read, never recompute). The emitted certificate carries the cert DTOs at `certificate_version` 1.5.0 with the additive corpusBinding, sbomArtifactBinding and agenticPostureBinding fields, so it round-trips offline under tenant-tail verify-certificate.\n",
     "title": "Certificate emit core (builder, signing, run-dir scan, corpus binding)"
   },
-  "shardHash": "463b9a3cad2919ea4fa05a829926739c6ff063e477e07e0300107b07294dd8c9",
-  "specVersion": "1.1.0"
+  "shardHash": "c8f904ef1efdbab070dd8a08cd44abc8353e570519c9c864fccf40bad451f487",
+  "specVersion": "1.9.0"
 }

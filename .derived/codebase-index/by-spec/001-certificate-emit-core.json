@@ -5,10 +5,6 @@
     ],
     "implementingPaths": [
       {
-        "path": "NOTICE",
-        "source": "spec-edge"
-      },
-      {
         "path": "crates/tenant-emit-core/src/certificate.rs",
         "source": "spec-edge"
       },
@@ -146,6 +142,6 @@
     "specId": "001-certificate-emit-core",
     "specStatus": "approved"
   },
-  "schemaVersion": "1.1.0",
-  "shardHash": "ee33bcae432aa43f59aefe62761c50d1e375f360c56111489ac31c20e1a79746"
+  "schemaVersion": "1.2.0",
+  "shardHash": "c8f904ef1efdbab070dd8a08cd44abc8353e570519c9c864fccf40bad451f487"
 }
