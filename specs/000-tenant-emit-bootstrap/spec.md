@@ -123,3 +123,25 @@ the distribution-specific checks move into the managed profile.
 
 The constitution template uses section authority claims for amendments, matching
 the managed constitution. The `amends` relationship continues to target spec ids.
+
+## Managed governance refresh (2026-10-02)
+
+The owner approved Statecraft profile revision 14 and fleet convergence after
+the revision-13 enrollment. This amendment adopts revision 14 with the
+existing exact spec-spine =0.28.0 pin and preserves the actual Rust code
+checks, all current governance parameters, and protected owner review.
+The revision-13 enrollment above remains the historical adoption record.
+The managed installer remains at .bin/spec-spine.
+Both ci-gate and ci-legacy remain required until the legacy workflow retires.
+The four-platform determinism workflow retains its Windows-compatible
+scratch installation of the exact same pinned engine. Revision 14 does not
+deliver the Windows executable-suffix repair needed to replace that path.
+Authored session instructions invoke the repository-local pinned binary;
+they do not invoke the removed npm governance dependency.
+The authored constitution retains corpus principles I through V and the
+amendment contract. Template authoring instructions are not part of the live
+constitution. This refresh adds no unratified product principles.
+The corrected constitution template is an authored customization. Its
+per-path managed-to-user ownership transfer is recorded by the Statecraft
+CLI with owner-delegated consent; its bytes are preserved, and init apply
+never silently overwrites that corrected amendment guidance.
