@@ -1,0 +1,18 @@
+{
+  "inputsManifestHash": "inputs-abc",
+  "registryHash": "registry-xyz",
+  "schemaVersion": "0.1.0",
+  "tool": {
+    "name": "spec-spine",
+    "version": "0.8.0"
+  },
+  "verdicts": {
+    "compile": {
+      "ok": true
+    },
+    "lint": {
+      "findingsHash": "findings-0",
+      "ok": true
+    }
+  }
+}

@@ -121,7 +121,9 @@ Notice that the `stageId` array was discovered lexicographically (`s0-preflight`
 The emitted certificate is designed to be verified offline using [`tenant-tail`](https://github.com/statecrafting/tenant-tail).
 
 ```bash
-npx --no-install tenant-tail verify-certificate .factory/runs/run-it-001/governance-certificate.json
+npx --no-install tenant-tail verify-certificate .factory/runs/run-it-001/governance-certificate.json \
+  --artifact-dir .factory/runs/run-it-001 \
+  --allow-unsealed
 ```
 
-Because `tenant-emit` and `tenant-tail` share the same exact certificate structure, the certificate will round-trip perfectly and verify cleanly.
+A tenant certificate carries no platform countersign by design, and `tenant-tail` (0.4.0 and later) rejects an unsealed certificate unless `--allow-unsealed` is passed. With that flag, and `--artifact-dir` pointing at the run so stage artifacts are re-hashed, the certificate round-trips and verifies cleanly. Add `--corpus-attestation <file>` and `--sbom-dir <app-root>` to check those bindings when the certificate carries them.

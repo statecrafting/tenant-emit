@@ -63,7 +63,38 @@
       },
       {
         "kind": "file",
+        "path": "scripts/roundtrip.sh"
+      },
+      {
+        "kind": "file",
         "path": "py/scripts/generate_wheels.py"
+      }
+    ],
+    "extends": [
+      {
+        "nature": "additive",
+        "spec": "000-tenant-emit-bootstrap",
+        "unit": {
+          "kind": "file",
+          "path": "crates/tenant-emit-cli/tests/fixtures/roundtrip/"
+        }
+      },
+      {
+        "nature": "additive",
+        "spec": "000-tenant-emit-bootstrap",
+        "unit": {
+          "kind": "file",
+          "path": "spec-spine.toml"
+        }
+      },
+      {
+        "nature": "additive",
+        "spec": "000-tenant-emit-bootstrap",
+        "unit": {
+          "anchor": "5-verify-the-certificate",
+          "file": "website/docs/getting-started/quickstart.md",
+          "kind": "section"
+        }
       }
     ],
     "id": "002-distribution",
@@ -87,13 +118,14 @@
     ],
     "risk": "medium",
     "sectionDigests": {
-      "002-distribution": "4ffca47e6f439d4f51a0af11e5a13f81f9d025c635993c06db12944505937669",
+      "002-distribution": "9890e49303bf4295f40abc76cb8467780ec7a8ab2ac394fa7087bec7c4e3b955",
       "1-purpose": "3b832af1ea5734a3e97db0397c7f90f91f3e7080eec1a558cb9f00cdd72f4bee",
       "2-territory": "12312cc311b72ab07d5f71fc3000a148cb22e72ad8e13496d9658daddb78f574",
       "3-behavior": "b794a1694cacfce558b2aefc98d5965fd670b3315cb5a987e1fd01840798b210",
       "4-out-of-scope": "4754e6e00149ce7ec86bdf963a5e6105da1e4f38d61c09f92fe6c4b23715be22",
       "managed-governance-enrollment-2026-10-02": "3ad5984e94c67dfb35d15519389472dc27afa6565f3d42e7097da1f665ca3d74",
-      "managed-governance-refresh-2026-10-02": "59a429a5accdf9744a8743bb0b1ca73dafa61ee0be05ffab0e2760d001b47a6c"
+      "managed-governance-refresh-2026-10-02": "982bf123efa04461ff91be54664fd0339679086ce57a1adfd8600fb183bf3f28",
+      "round-trip-verifier-pin-2026-10-04": "a4d00f426b95895a79aa98743492df93fa69e53495e2182169ec0de403f5da2f"
     },
     "sectionHeadings": [
       "002: Distribution",
@@ -102,13 +134,14 @@
       "3. Behavior",
       "4. Out of scope",
       "Managed governance enrollment (2026-10-02)",
-      "Managed governance refresh (2026-10-02)"
+      "Managed governance refresh (2026-10-02)",
+      "Round-trip verifier pin (2026-10-04)"
     ],
     "specPath": "specs/002-distribution/spec.md",
     "status": "approved",
     "summary": "How the tenant-emit emitter reaches a produced application: the CLI verb surface (`build-certificate`, with `--tenant-mode`, the signer flags, `--require-operator-key`, the `--corpus-attestation` and `--sbom-dir` read-paths, the automatic agentic-posture read off the frozen Build Spec (spec 210 FR-002, no flag), and the `--require-corpus-binding` / `--require-sbom-binding` guards that exit 2 rather than emit a certificate that lost a binding it was told to carry, all under a fixed exit-code contract), the prebuilt-binary npm shim a TS/JS app pins next to spec-spine and tenant-tail (one exact-version devDependency), and the tag-gated release pipeline that builds the five per-triple archives (with CycloneDX SBOM + .sha256 sidecars + SLSA provenance) and assembles the `@tenant-emit/cli-<os>-<cpu>` platform packages. The shim is a launcher, not a native addon, and mirrors spec-spine's npm/ shape. A parallel PyPI channel (`uvx tenant-emit ...`) ships the same prebuilt binary as five per-platform wheels plus an sdist refusal fallback, from the same release archives (no second Rust build). The read-never-recompute guard (clippy.toml + deny.toml) keeps the corpus read-path honest.\n",
     "title": "Distribution: the build-certificate verb, npm + PyPI binary shims, release pipeline"
   },
-  "shardHash": "f59944cc999d54d200cf149b4395e2416b2d1f8f21b40ff131940315ee9306ec",
+  "shardHash": "4a50a4e449dc5b2ac4a89c584c786a506da501b3a97699eb7763d4cb33ec1c79",
   "specVersion": "1.9.0"
 }

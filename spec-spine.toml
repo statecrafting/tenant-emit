@@ -34,7 +34,7 @@ standalone_rust_workspaces = []
 standalone_npm_packages    = ["npm"]
 
 [index]
-extra_hashed_inputs = ["AGENTS.md", "Makefile", "scripts/statecraft/**/*", ".statecraft/AGENTS.md", ".statecraft/environment.json", ".statecraft/setup/github-actions-rust.json", ".github/CODEOWNERS", "standards/**/*", ".github/workflows/**/*"]
+extra_hashed_inputs = ["AGENTS.md", "Makefile", "scripts/statecraft/**/*", ".statecraft/AGENTS.md", ".statecraft/environment.json", ".statecraft/setup/github-actions-rust.json", ".github/CODEOWNERS", "standards/**/*", ".github/workflows/**/*", "scripts/roundtrip.sh"]
 resolver_exclusions = ["target", "node_modules", ".derived", "dist", "build", ".next"]
 
 [branding]

@@ -89,63 +89,34 @@ jobs:
 
   # The load-bearing invariant made executable: a certificate emitted by
   # `tenant-emit` MUST verify clean under the SEPARATELY-VENDED `tenant-tail`
-  # verifier, and tampering an artifact MUST fail verification (exit 1). This
-  # job installs the released tenant-tail from crates.io and drives the real
-  # cross-tool round-trip. It is a VISIBLE skip (a loud ::warning::, never a
-  # silent green) until tenant-tail is published, and becomes enforcing the
-  # moment it is -- matching the repo's anti-silent-green posture elsewhere.
+  # verifier, and tampering any bound input MUST fail verification (exit 1).
+  # This job installs the pinned released tenant-tail from crates.io and runs
+  # scripts/roundtrip.sh, which emits a certificate carrying every binding
+  # (corpus attestation, SBOM + audit, agentic posture) and asserts each tamper
+  # is rejected for its own reason. tenant-tail is published, so a verifier
+  # that cannot be installed is a hard failure, never a skip: a green
+  # ci-legacy always means the round-trip ran. Bump TENANT_TAIL_VERSION when
+  # tenant-tail releases so the emitter is checked against the verifier
+  # tenants actually pin.
   roundtrip:
     name: cross-tool round-trip (emit → tenant-tail verify)
     runs-on: ubuntu-latest
     env:
-      TENANT_TAIL_VERSION: '0.2.0'
+      TENANT_TAIL_VERSION: '0.4.0'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
       - name: Show toolchain
         run: rustc --version && cargo --version
       - name: Build tenant-emit (the emitter under test)
         run: cargo build --release --locked --bin tenant-emit
-      - name: Install released tenant-tail (the verifier)
-        id: verifier
-        run: |
-          set -uo pipefail
-          if cargo install tenant-tail-cli --version "${TENANT_TAIL_VERSION}" --locked --root "$RUNNER_TEMP/tt" >/tmp/tt-install.log 2>&1; then
-            echo "available=true" >> "$GITHUB_OUTPUT"
-            echo "bin=$RUNNER_TEMP/tt/bin/tenant-tail" >> "$GITHUB_OUTPUT"
-          else
-            echo "available=false" >> "$GITHUB_OUTPUT"
-            echo "::warning title=round-trip skipped::tenant-tail ${TENANT_TAIL_VERSION} is not installable from crates.io yet; the cross-tool round-trip did NOT run. ci-legacy passes so the unpublished verifier does not block merges, and this becomes enforcing once tenant-tail publishes. A green ci-legacy here does NOT imply the round-trip ran."
-            tail -n 5 /tmp/tt-install.log || true
-          fi
-      - name: Emit → verify clean → tamper → verify fails
-        if: steps.verifier.outputs.available == 'true'
+      - name: Install pinned tenant-tail (the verifier)
+        run: cargo install tenant-tail-cli --version "${TENANT_TAIL_VERSION}" --locked --root "$RUNNER_TEMP/tt"
+      - name: Emit → verify clean → tamper each binding → verify fails
         env:
           # Fixed operator seed (matches the integration tests); any valid
           # 32-byte base64 seed works. Test-only, not a real key.
           OAP_SIGNING_KEY: 'AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8='
-        run: |
-          set -euo pipefail
-          EMIT="target/release/tenant-emit"
-          TT="${{ steps.verifier.outputs.bin }}"
-          RUN="$RUNNER_TEMP/run/.factory/runs/run-ci-001"
-          mkdir -p "$RUN/tenant-codegen"
-          printf 'fn main(){}\n' > "$RUN/tenant-codegen/app.rs"
-
-          "$EMIT" build-certificate "$RUN" \
-            --tenant-mode \
-            --signer-subject ci@tenant --signer-identity-provider github-actions \
-            --stage-ids auto --require-operator-key
-
-          echo "== verify clean (must exit 0) =="
-          "$TT" verify-certificate "$RUN/governance-certificate.json" --artifact-dir "$RUN"
-
-          echo "== tamper an artifact, then verify (must exit 1) =="
-          printf 'tampered\n' > "$RUN/tenant-codegen/app.rs"
-          if "$TT" verify-certificate "$RUN/governance-certificate.json" --artifact-dir "$RUN"; then
-            echo "FAIL: the verifier accepted a tampered artifact"
-            exit 1
-          fi
-          echo "round-trip OK: clean verify passed, tamper was rejected"
+        run: bash scripts/roundtrip.sh target/release/tenant-emit "$RUNNER_TEMP/tt/bin/tenant-tail" "$RUNNER_TEMP/roundtrip"
 
   # AI PR review folded into the gate (OAP spec 177 + 085 precedent). PR-only:
   # it needs PR context (number, base/head diff), so it is skipped on

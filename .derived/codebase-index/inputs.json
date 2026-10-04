@@ -7,7 +7,7 @@
       "contentHash": "36dfe35c11cbd18c0fb869594777482175a1b82c71736dc911a4550eff25077f"
     },
     ".github/workflows/ci.yml": {
-      "contentHash": "632280d9b26f167cfbc0790794173ac2b83aaa7f0e778d4d593ae00aa5bbc29a"
+      "contentHash": "b7fff3f2c3ac4f72c84083717e91e69454eb27b9dcb222d38786eb032086268f"
     },
     ".github/workflows/deploy-docs.yml": {
       "contentHash": "391ab79bf31c3e3712b528c71e4fd902d0267e74e776fc425fc760b0d2389945"
@@ -39,6 +39,9 @@
     "Makefile": {
       "contentHash": "c730ce2c50814c6df097363f3dcf336a2c8dc7bac0bf5e670f255e2cc5f2881a"
     },
+    "scripts/roundtrip.sh": {
+      "contentHash": "edf46d5f396cc152af41a8fab8e3958a5c9feda5cad54faea7ca88e98eeb2cb3"
+    },
     "scripts/statecraft/ai-review.sh": {
       "contentHash": "431f7224dd1d5b6cc4cb99d7369787c59c5cf1dbd7a9e9eeae1b527ebb67cbc7"
     },
@@ -52,7 +55,7 @@
       "contentHash": "73a9d668559cfb8e3c9ab8e7fc9e27f513e3053056fb5643deb1e216efd8990c"
     },
     "spec-spine.toml": {
-      "contentHash": "fc7c1da265c68eafa2b8984dd35640be5e439e2bc6bf1fcddbb49a33738fac47"
+      "contentHash": "3b3df20aef763cc131d23a6dff264b70131e164b8a467d8e10b4b8f523dd1acb"
     },
     "standards/spec/constitution.md": {
       "contentHash": "37d859bf3541d42bf72cf79cb2bd46825b1c9968ea70e60866fdd87f8e609342"
