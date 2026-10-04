@@ -30,6 +30,10 @@
         "source": "spec-edge"
       },
       {
+        "path": "crates/tenant-emit-cli/tests/fixtures/roundtrip/",
+        "source": "spec-edge"
+      },
+      {
         "path": "deny.toml",
         "source": "spec-edge"
       },
@@ -68,6 +72,18 @@
       {
         "path": "py/scripts/smoke_test.sh",
         "source": "comment-header"
+      },
+      {
+        "path": "scripts/roundtrip.sh",
+        "source": "spec-edge"
+      },
+      {
+        "path": "spec-spine.toml",
+        "source": "spec-edge"
+      },
+      {
+        "path": "website/docs/getting-started/quickstart.md",
+        "source": "spec-edge"
       }
     ],
     "resolvedUnits": [
@@ -256,6 +272,63 @@
       {
         "locations": [
           {
+            "file": "scripts/roundtrip.sh"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "establishes",
+        "unit": {
+          "kind": "file",
+          "path": "scripts/roundtrip.sh"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "crates/tenant-emit-cli/tests/fixtures/roundtrip/"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "extends",
+        "unit": {
+          "kind": "file",
+          "path": "crates/tenant-emit-cli/tests/fixtures/roundtrip/"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "spec-spine.toml"
+          }
+        ],
+        "ownership": true,
+        "sourceField": "extends",
+        "unit": {
+          "kind": "file",
+          "path": "spec-spine.toml"
+        }
+      },
+      {
+        "locations": [
+          {
+            "file": "website/docs/getting-started/quickstart.md",
+            "span": {
+              "endLine": 129,
+              "startLine": 119
+            }
+          }
+        ],
+        "ownership": true,
+        "sourceField": "extends",
+        "unit": {
+          "anchor": "5-verify-the-certificate",
+          "file": "website/docs/getting-started/quickstart.md",
+          "kind": "section"
+        }
+      },
+      {
+        "locations": [
+          {
             "file": "npm/README.md"
           }
         ],
@@ -284,5 +357,5 @@
     "specStatus": "approved"
   },
   "schemaVersion": "1.2.0",
-  "shardHash": "f59944cc999d54d200cf149b4395e2416b2d1f8f21b40ff131940315ee9306ec"
+  "shardHash": "7916d2121895330ce843e15cb9ed5557d65e2d723dbc3f2d37d439d3c5c24dfc"
 }

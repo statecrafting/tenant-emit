@@ -27,6 +27,13 @@ summary: >
 depends_on:
   - "000-tenant-emit-bootstrap"
   - "001-certificate-emit-core"
+extends:
+  # The round-trip acceptance contract (§3) reaches into bootstrap-floor
+  # territory: its committed fixtures, the hashed-input entry for
+  # scripts/roundtrip.sh, and the documented verify command.
+  - { spec: "000-tenant-emit-bootstrap", unit: "crates/tenant-emit-cli/tests/fixtures/roundtrip/", nature: additive }
+  - { spec: "000-tenant-emit-bootstrap", unit: "spec-spine.toml", nature: additive }
+  - { spec: "000-tenant-emit-bootstrap", unit: { kind: section, file: "website/docs/getting-started/quickstart.md", anchor: "5-verify-the-certificate" }, nature: additive }
 establishes:
   - { kind: file, path: "crates/tenant-emit-cli/src/main.rs" }
   - { kind: file, path: "clippy.toml" }
@@ -41,6 +48,7 @@ establishes:
   - { kind: file, path: ".github/workflows/ci.yml" }
   - { kind: file, path: ".github/workflows/determinism.yml" }
   - { kind: file, path: ".github/workflows/ai-pr-review.yml" }
+  - { kind: file, path: "scripts/roundtrip.sh" }
   - { kind: file, path: "py/scripts/generate_wheels.py" }
 references:
   - { unit: { kind: file, path: "npm/README.md" }, role: context }
@@ -178,3 +186,17 @@ Both ci-gate and ci-legacy remain required until the legacy workflow retires.
 The four-platform determinism workflow retains its Windows-compatible
 scratch installation of the exact same pinned engine. Revision 14 does not
 deliver the Windows executable-suffix repair needed to replace that path.
+
+## Round-trip verifier pin (2026-10-04)
+
+The owner chose to check the acceptance contract above against the verifier
+tenants actually pin. CI's round-trip installs tenant-tail 0.4.0 (previously
+0.2.0) and runs `scripts/roundtrip.sh`, which emits a certificate carrying the
+corpus, SBOM and agentic-posture bindings and requires each tampered input to
+fail for its own reason. tenant-tail 0.4.0 rejects an unsealed certificate by
+default (spec 198 FR-014); a tenant certificate is unsealed by design (spec 001
+§3), so the contract's "verifies clean" means verifying with
+`--allow-unsealed`. A tenant-tail version that cannot be installed fails CI
+rather than skipping the round-trip. The committed attestation fixture must be
+canonical: the emitter binds the canonical hash while the verifier hashes the
+file bytes, so a non-canonical fixture fails the clean verify.

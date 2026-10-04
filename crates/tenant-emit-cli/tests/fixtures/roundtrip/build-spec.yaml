@@ -1,0 +1,6 @@
+name: roundtrip-app
+agentic_posture:
+  posture: declared
+  surfaces:
+    - kind: model-api
+      description: chat completion endpoint
